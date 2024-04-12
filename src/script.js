@@ -8,6 +8,7 @@ function updateWeather(response) {
   let timeElement = document.querySelector("#time");
   let date = new Date(response.data.time * 1000);
   let iconElement = document.querySelector("#icon");
+  console.log(response.data);
 
   iconElement.innerHTML = `<img src="${response.data.condition.icon_url}" class="weather-app-emoji"/>`;
   timeElement.innerHTML = formatDate(date);
@@ -49,6 +50,7 @@ function handleSearchSubmit(event) {
 
   searchCity(searchInput.value);
 }
+
 let searchFormElement = document.querySelector("#search-form");
 searchFormElement.addEventListener("submit", handleSearchSubmit);
 
