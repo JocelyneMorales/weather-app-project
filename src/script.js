@@ -54,7 +54,7 @@ function handleSearchSubmit(event) {
 
 function formatDay(timestamp) {
   let date = new Date(timestamp * 1000);
-  let days = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
+  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   return days[date.getDay()];
 }
@@ -99,5 +99,5 @@ function displayForecast(response) {
 let searchFormElement = document.querySelector("#search-form");
 searchFormElement.addEventListener("submit", handleSearchSubmit);
 
-searchCity("Berlin");
+searchCity("Grecia");
 // displayForecast();
