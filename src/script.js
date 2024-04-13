@@ -8,7 +8,6 @@ function updateWeather(response) {
   let timeElement = document.querySelector("#time");
   let date = new Date(response.data.time * 1000);
   let iconElement = document.querySelector("#icon");
-  console.log(response.data);
 
   iconElement.innerHTML = `<img src="${response.data.condition.icon_url}" class="weather-app-emoji"/>`;
   timeElement.innerHTML = formatDate(date);
@@ -17,6 +16,8 @@ function updateWeather(response) {
   descriptionElement.innerHTML = response.data.condition.description;
   cityElement.innerHTML = response.data.city;
   temperatureElement.innerHTML = Math.round(temperature);
+
+  getForecast(response.data.city);
 }
 
 function formatDate(date) {
@@ -51,10 +52,15 @@ function handleSearchSubmit(event) {
   searchCity(searchInput.value);
 }
 
-let searchFormElement = document.querySelector("#search-form");
-searchFormElement.addEventListener("submit", handleSearchSubmit);
+function getForecast(city) {
+  let apiKey = "628atfa04eb144c5fo14f703eb967e76";
+  let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=metric`;
+  axios.get(apiUrl).then(displayForecast);
+}
 
-function displayForecast() {
+function displayForecast(response) {
+  console.log(response.data);
+
   let days = [`Tues`, `wed`, `thurs`, `fri`, `sat`];
   let forecastHTML = "";
 
@@ -62,21 +68,23 @@ function displayForecast() {
     forecastHTML =
       forecastHTML +
       ` 
-  <div class="row">
-            <div class="col-2">
+            <div class="weather-forecast-day">
               <div class="weahther-forecast-date">${day}</div>
-            </div>
             <div class="weather-forecast-icon">🌤️</div>
             <div class="weather-forecast-temperatures">
               <span class="weather-forecast-temperature-max"> 18</span>
               <span class="weather-forecast-temperature-mmin"> 12</span>
             </div>
-          </div>`;
+          </div>
+          `;
   });
 
   let forecastElement = document.querySelector("#forecast");
   forecastElement.innerHTML = forecastHTML;
 }
 
-searchCity("San Jose");
-displayForecast();
+let searchFormElement = document.querySelector("#search-form");
+searchFormElement.addEventListener("submit", handleSearchSubmit);
+
+searchCity("Berlin");
+// displayForecast();
